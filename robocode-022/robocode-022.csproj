@@ -7,8 +7,8 @@
     <ProjectGuid>{84C61307-6CA8-4A8B-B4C1-6AAAE5701091}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>robocode_022</RootNamespace>
-    <AssemblyName>robocode-022</AssemblyName>
+    <RootNamespace>DLKWGD</RootNamespace>
+    <AssemblyName>022</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="robocode">
+      <HintPath>E:\Programy\robocode\libs\robocode.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
