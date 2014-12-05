@@ -7,72 +7,54 @@ using Robocode;
 
 namespace DLKWGD
 {
-    // The name of your robot is MyRobot, and the robot type is Robot
-    class zero22 : Robot
+    class zero22 : AdvancedRobot
     {
         double x_pole = 0, y_pole = 0;
+        double kierunek = 1;
         public void okreslWymiaryPola()
         {
-            //Console.WriteLine("heading: " + Heading);
             TurnRight(360 - Heading);
-            //Console.WriteLine("heading: " + Heading);
-            Ahead(5000);
-            TurnRight(90);
-            Ahead(5000);
+            SetAhead(5000);
+            SetTurnRight(90);
+            SetAhead(5000);
             Console.WriteLine(X + ", " + Y);
             x_pole = X;
             y_pole = Y;
         }
+
+        public void skanujOscylacyjnie(double kierunek)
+        {
+            SetTurnRadarRight( 50 * kierunek);
+            SetTurnGunRight(50 * kierunek);
+            kierunek *= -1;
+            SetTurnRadarRight( 100 * kierunek);
+            SetTurnGunRight(100 * kierunek);
+        }
+
         public override void Run()
         {
-            //Console.WriteLine("gun heading: " + GunHeading);
-            //TurnGunRight(360);
-            //TurnGunRight(360 - GunHeading);
-            //Console.WriteLine("gun heading: " + GunHeading);
-
-            //ustalam rozmiar pola bitwy
             okreslWymiaryPola();
             Console.WriteLine(x_pole + " " + y_pole);
-
+            while (DistanceRemaining > 0 && TurnRemaining > 0 && RadarTurnRemaining> 0)
+            {
+                Execute();
+            }
         }
 
         public override void OnScannedRobot(ScannedRobotEvent evnt)
         {
-            Console.WriteLine("wyskanowano robota, gun heat: " + GunHeat);
-            Fire(1);
+            if (evnt.Distance < 100)
+            {
+                SetFire(3);
+            }
+            else
+            {
+                SetFire(1);
+            }
+            IsAdjustRadarForRobotTurn = true;
+            Console.WriteLine("wyskanowano, distance: " + evnt.Distance + ", gun heat: " + GunHeat);
+            skanujOscylacyjnie(kierunek);
+            kierunek *= -1;
         }
-
-        //// The main method of your robot containing robot logics
-        //public override void Run()
-        //{
-        //    // -- Initialization of the robot --
-
-        //    // Here we turn the robot to point upwards, and move the gun 90 degrees
-        //    TurnLeft(Heading - 90);
-        //    TurnGunRight(90);
-
-        //    // Infinite loop making sure this robot runs till the end of the battle round
-        //    while (true)
-        //    {
-        //        // -- Commands that are repeated forever --
-
-        //        // Move our robot 5000 pixels ahead
-        //        Ahead(5000);
-
-        //        // Turn the robot 90 degrees
-        //        TurnRight(90);
-
-        //        // Our robot will move along the borders of the battle field
-        //        // by repeating the above two statements.
-        //    }
-        //}
-
-        //// Robot event handler, when the robot sees another robot
-        //public override void OnScannedRobot(ScannedRobotEvent e)
-        //{
-        //    // We fire the gun with bullet power = 1
-        //    Fire(1);
-        //}
-
     }
 }
